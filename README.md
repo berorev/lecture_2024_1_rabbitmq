@@ -1,1 +1,1 @@
-# lecture_2024_1_rabbitmq
+# 2024 1차 교육 - RabbitMQ
