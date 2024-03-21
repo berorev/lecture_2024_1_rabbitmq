@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: rabbitmq-chat
+  rabbitmq:
+    username: berorev
+    password: 1111

@@ -1,0 +1,11 @@
+tutorial:
+  client:
+    duration: 5000
+
+spring:
+  rabbitmq:
+    listener:
+      simple:
+        concurrency: 3
+        max-concurrency: 3
+        prefetch: 1

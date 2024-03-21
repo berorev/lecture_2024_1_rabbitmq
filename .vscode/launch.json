@@ -1,0 +1,12 @@
+{
+  "configurations": [
+    {
+      "type": "java",
+      "name": "RabbitmqChatApplication",
+      "request": "launch",
+      "mainClass": "com.fasoo.lecture.rabbitmqchat.RabbitmqChatApplication",
+      "projectName": "rabbitmq-chat",
+      "args": "--spring.profiles.active=tutorial"
+    }
+  ]
+}
