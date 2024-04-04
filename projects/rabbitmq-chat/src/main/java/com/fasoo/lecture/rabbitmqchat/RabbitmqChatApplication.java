@@ -11,12 +11,6 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableScheduling
 public class RabbitmqChatApplication {
 
-	@Profile("tutorial")
-	@Bean
-	public CommandLineRunner tutorial() {
-		return new RabbitAmqpTutorialsRunner();
-	}
-
 	public static void main(String[] args) {
 		SpringApplication.run(RabbitmqChatApplication.class, args);
 	}
