@@ -5,22 +5,24 @@ import java.util.concurrent.atomic.AtomicInteger;
 import org.springframework.amqp.core.TopicExchange;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Profile;
 import org.springframework.scheduling.annotation.Scheduled;
 
-@Profile("sender")
+@Profile("lecture2-sender")
 public class DataSender {
   @Autowired
   private RabbitTemplate template;
 
   @Autowired
+  @Qualifier("request")
   private TopicExchange topic;
 
   private AtomicInteger index = new AtomicInteger(0);
   private AtomicInteger count = new AtomicInteger(0);
 
-  private final String[] keys = {"quick.orange.rabbit", "lazy.orange.elephant", "quick.orange.fox",
-      "lazy.brown.fox", "lazy.pink.rabbit", "quick.brown.fox"};
+  private final String[] keys = {"command.hi1", "command.hi2", "chat.user.user1", "chat.user.user2",
+      "chat.room.room1", "chat.room.room2"};
 
   @Scheduled(fixedDelay = 1000, initialDelay = 500)
   public void send() {

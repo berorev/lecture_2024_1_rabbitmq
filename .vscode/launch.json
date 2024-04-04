@@ -2,11 +2,19 @@
   "configurations": [
     {
       "type": "java",
-      "name": "RabbitmqChatApplication",
+      "name": "lecture2-listener",
       "request": "launch",
       "mainClass": "com.fasoo.lecture.rabbitmqchat.RabbitmqChatApplication",
       "projectName": "rabbitmq-chat",
-      "args": "--spring.profiles.active=tutorial"
+      "args": "--spring.profiles.active=tutorial,lecture2,lecture2-listener"
+    },
+    {
+      "type": "java",
+      "name": "lecture2-sender",
+      "request": "launch",
+      "mainClass": "com.fasoo.lecture.rabbitmqchat.RabbitmqChatApplication",
+      "projectName": "rabbitmq-chat",
+      "args": "--spring.profiles.active=tutorial,lecture2,lecture2-sender"
     }
   ]
 }
