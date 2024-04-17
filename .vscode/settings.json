@@ -1,7 +1,7 @@
 {
   "java.compile.nullAnalysis.mode": "disabled",
   "editor.formatOnSave": true,
-  "java.format.settings.url": ".vscode/eclipse-java-google-style-20240404.xml",
+  "java.format.settings.url": ".vscode/microboot_formatter_20200511.xml",
   "[java]": {
     "editor.insertSpaces": true,
     "editor.detectIndentation": false
