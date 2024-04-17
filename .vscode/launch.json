@@ -15,6 +15,22 @@
       "mainClass": "com.fasoo.lecture.rabbitmqchat.RabbitmqChatApplication",
       "projectName": "rabbitmq-chat",
       "args": "--spring.profiles.active=tutorial,lecture2,lecture2-sender"
+    },
+    {
+      "type": "java",
+      "name": "lecture3-listener",
+      "request": "launch",
+      "mainClass": "com.fasoo.lecture.rabbitmqchat.RabbitmqChatApplication",
+      "projectName": "rabbitmq-chat",
+      "args": "--spring.profiles.active=tutorial,lecture3,lecture3-listener"
+    },
+    {
+      "type": "java",
+      "name": "lecture3-sender",
+      "request": "launch",
+      "mainClass": "com.fasoo.lecture.rabbitmqchat.RabbitmqChatApplication",
+      "projectName": "rabbitmq-chat",
+      "args": "--spring.profiles.active=tutorial,lecture3,lecture3-sender"
     }
   ]
 }
