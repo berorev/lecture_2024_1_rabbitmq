@@ -75,6 +75,7 @@ public class DataSenderConfiguration {
     return template;
   }
 
+  @Bean
   public Queue myUserQueue() {
     return QueueBuilder.durable("user." + Lecture4Config.USERNAME)
         .deadLetterExchange("")
