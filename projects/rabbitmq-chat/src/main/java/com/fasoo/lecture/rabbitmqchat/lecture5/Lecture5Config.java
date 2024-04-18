@@ -1,5 +1,6 @@
 package com.fasoo.lecture.rabbitmqchat.lecture5;
 
+import org.springframework.amqp.core.FanoutExchange;
 import org.springframework.amqp.core.TopicExchange;
 import org.springframework.amqp.support.converter.ContentTypeDelegatingMessageConverter;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
@@ -20,8 +21,8 @@ public class Lecture5Config {
   }
 
   @Bean("user")
-  public TopicExchange userTopicExchange() {
-    return new TopicExchange("user");
+  public FanoutExchange userFanoutExchange() {
+    return new FanoutExchange("user");
   }
 
   @Bean

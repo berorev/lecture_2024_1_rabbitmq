@@ -2,6 +2,7 @@ package com.fasoo.lecture.rabbitmqchat.lecture2.listener;
 
 import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.Declarables;
+import org.springframework.amqp.core.FanoutExchange;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.core.TopicExchange;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -26,23 +27,25 @@ public class QueueListenerConfiguration {
 
     TopicExchange chatTopicExchange = new TopicExchange("chat");
 
-    // userTopicExchange와 userQueue는 1:1 조건없는 관계여서,
-    // userTopicExchange가 불필요해 보이나, 그림 상 있어서 추가.
-    // roomTopicExchange도 마찬가지
-    TopicExchange userTopicExchange = new TopicExchange("user");
-    TopicExchange roomTopicExchange = new TopicExchange("room");
+    FanoutExchange userFanoutExchange = new FanoutExchange("user");
+    FanoutExchange roomFanoutExchange = new FanoutExchange("room");
 
     return new Declarables(
 
-        commandQueue, userQueue, roomQueue,
+        commandQueue,
+        userQueue,
+        roomQueue,
 
-        requestTopicExchange, chatTopicExchange, userTopicExchange, roomTopicExchange,
+        requestTopicExchange,
+        chatTopicExchange,
+        userFanoutExchange,
+        roomFanoutExchange,
 
         BindingBuilder.bind(commandQueue).to(requestTopicExchange).with("command.#"),
-        BindingBuilder.bind(userQueue).to(userTopicExchange).with("#"),
-        BindingBuilder.bind(roomQueue).to(roomTopicExchange).with("#"),
-        BindingBuilder.bind(userTopicExchange).to(chatTopicExchange).with("*.user.#"),
-        BindingBuilder.bind(roomTopicExchange).to(chatTopicExchange).with("*.room.#"),
+        BindingBuilder.bind(userQueue).to(userFanoutExchange),
+        BindingBuilder.bind(roomQueue).to(roomFanoutExchange),
+        BindingBuilder.bind(userFanoutExchange).to(chatTopicExchange).with("*.user.#"),
+        BindingBuilder.bind(roomFanoutExchange).to(chatTopicExchange).with("*.room.#"),
         BindingBuilder.bind(chatTopicExchange).to(requestTopicExchange).with("chat.#"));
   }
 

@@ -2,6 +2,7 @@ package com.fasoo.lecture.rabbitmqchat.lecture5.listener;
 
 import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.Declarables;
+import org.springframework.amqp.core.FanoutExchange;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.core.QueueBuilder;
 import org.springframework.amqp.core.TopicExchange;
@@ -29,14 +30,14 @@ public class QueueListenerConfiguration {
   }
 
   @Bean("room")
-  public TopicExchange roomTopicExchange() {
-    return new TopicExchange("room");
+  public FanoutExchange roomFanoutExchange() {
+    return new FanoutExchange("room");
   }
 
   @Bean
   public Declarables topicBindings(
       @Qualifier("request") TopicExchange requestTopicExchange,
-      @Qualifier("user") TopicExchange userTopicExchange) {
+      @Qualifier("user") FanoutExchange userFanoutExchange) {
     Queue deadLetterQueue = new Queue(QueueName.DEAD_LETTER_QUEUE.queueName());
     Queue commandQueue = new Queue(QueueName.COMMAND.queueName());
     // Queue userQueue = new Queue(QueueName.USER.queueName());
@@ -49,7 +50,7 @@ public class QueueListenerConfiguration {
 
     TopicExchange chatTopicExchange = new TopicExchange("chat");
 
-    TopicExchange roomTopicExchange = roomTopicExchange();
+    FanoutExchange roomFanoutExchange = roomFanoutExchange();
 
     return new Declarables(
 
@@ -60,14 +61,12 @@ public class QueueListenerConfiguration {
 
         requestTopicExchange,
         chatTopicExchange,
-        // userTopicExchange,
-        // roomTopicExchange,
 
         BindingBuilder.bind(commandQueue).to(requestTopicExchange).with("command.#"),
-        BindingBuilder.bind(userQueue).to(userTopicExchange).with("#"),
-        BindingBuilder.bind(roomQueue).to(roomTopicExchange).with("#"),
-        BindingBuilder.bind(userTopicExchange).to(chatTopicExchange).with("*.user.#"),
-        BindingBuilder.bind(roomTopicExchange).to(chatTopicExchange).with("*.room.#"),
+        BindingBuilder.bind(userQueue).to(userFanoutExchange),
+        BindingBuilder.bind(roomQueue).to(roomFanoutExchange),
+        BindingBuilder.bind(userFanoutExchange).to(chatTopicExchange).with("*.user.#"),
+        BindingBuilder.bind(roomFanoutExchange).to(chatTopicExchange).with("*.room.#"),
         BindingBuilder.bind(chatTopicExchange).to(requestTopicExchange).with("chat.#"));
   }
 
